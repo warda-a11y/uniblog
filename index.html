@@ -1,0 +1,835 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>University of Layyah | Student Blog</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f7f9f7;
+            color: #24352c;
+            line-height: 1.7;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 18px 7%;
+            background: white;
+            box-shadow: 0 2px 12px #0000000c;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: #17613e;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        nav a {
+            color: #34483b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #198754;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #123c2b, #247653);
+            color: white;
+            padding: 85px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 35px;
+            min-height: 390px;
+        }
+
+        .hero-content {
+            max-width: 720px;
+        }
+
+        .university-label {
+            color: #d4f1dd;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 5vw, 54px);
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .hero h2 {
+            font-size: clamp(19px, 3vw, 25px);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .hero p {
+            color: #e4f1e8;
+            margin-bottom: 28px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 12px 23px;
+            background: white;
+            color: #17613e;
+            border-radius: 7px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .hero-btn:hover {
+            background: #e5f5e9;
+            transform: translateY(-2px);
+        }
+
+        .hero-icon {
+            font-size: 100px;
+            background: #ffffff12;
+            border: 1px solid #ffffff30;
+            border-radius: 30px;
+            padding: 25px;
+        }
+
+        .container {
+            padding: 65px 7%;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-heading h2 {
+            font-size: 32px;
+            color: #17613e;
+            margin-bottom: 8px;
+        }
+
+        .section-heading p {
+            color: #738076;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        #searchInput {
+            flex: 1;
+            min-width: 220px;
+            padding: 13px 15px;
+            border: 1px solid #dce5dd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline-color: #198754;
+            background: white;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .category-btn {
+            padding: 10px 15px;
+            border: 1px solid #dce5dd;
+            border-radius: 7px;
+            background: white;
+            color: #34483b;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: #17613e;
+            border-color: #17613e;
+            color: white;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .blog-card {
+            background: white;
+            border: 1px solid #e7eee8;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 18px #153d2508;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px #153d2512;
+        }
+
+        .tag {
+            align-self: flex-start;
+            display: inline-block;
+            background: #e5f4e9;
+            color: #17613e;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .blog-content h3 {
+            font-size: 21px;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            color: #243b2d;
+        }
+
+        .blog-meta {
+            font-size: 12px;
+            color: #7b897e;
+            margin-bottom: 15px;
+        }
+
+        .blog-content p {
+            color: #657168;
+            font-size: 14px;
+            margin-bottom: 18px;
+            overflow-wrap: anywhere;
+        }
+
+        .read-btn {
+            align-self: flex-start;
+            margin-top: auto;
+            border: none;
+            background: none;
+            color: #187345;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .read-btn:hover {
+            color: #0b4c2b;
+            text-decoration: underline;
+        }
+
+        .empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 15px;
+            color: #77847a;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .add-section {
+            background: #eaf3ec;
+            padding: 65px 7%;
+        }
+
+        .form-box {
+            max-width: 680px;
+            margin: auto;
+            background: white;
+            padding: 32px;
+            border-radius: 13px;
+            box-shadow: 0 5px 25px #153d250a;
+        }
+
+        .form-box h2 {
+            text-align: center;
+            color: #17613e;
+            margin-bottom: 8px;
+        }
+
+        .form-intro {
+            text-align: center;
+            color: #77847a;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .form-box label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .form-box input,
+        .form-box select,
+        .form-box textarea {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 17px;
+            border: 1px solid #dce5dd;
+            border-radius: 7px;
+            background: white;
+            font-size: 15px;
+            outline-color: #198754;
+        }
+
+        .form-box textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            background: #17613e;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #104a2e;
+        }
+
+        footer {
+            background: #123c2b;
+            color: white;
+            text-align: center;
+            padding: 30px 7%;
+        }
+
+        footer h3 {
+            margin-bottom: 6px;
+        }
+
+        footer p {
+            color: #d4e6d9;
+            font-size: 14px;
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            max-width: calc(100% - 44px);
+            padding: 14px 20px;
+            background: #17613e;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px #0002;
+            display: none;
+            z-index: 200;
+        }
+
+        @media (max-width: 950px) {
+            .blog-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .hero-icon {
+                font-size: 75px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            header {
+                flex-direction: column;
+                padding: 15px 5%;
+            }
+
+            nav {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px 18px;
+            }
+
+            .hero {
+                padding: 55px 6%;
+            }
+
+            .hero-icon {
+                display: none;
+            }
+
+            .container {
+                padding: 45px 5%;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                align-items: stretch;
+            }
+
+            #searchInput {
+                min-width: 100%;
+            }
+
+            .form-box {
+                padding: 22px;
+            }
+
+            .add-section {
+                padding: 45px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <div class="logo">University of Layyah</div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#blogs">Blogs</a>
+            <a href="#about">About</a>
+            <a href="#add-blog">Write a Blog</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="university-label">STUDENT BLOG PLATFORM</div>
+
+            <h1>University of Layyah</h1>
+
+            <h2>Ideas. Knowledge. Student Voices.</h2>
+
+            <p>
+                Welcome to our student blog platform. Discover ideas, share
+                knowledge, explore technology and express your creativity
+                through writing.
+            </p>
+
+            <a href="#blogs" class="hero-btn">Explore Student Blogs →</a>
+        </div>
+
+        <div class="hero-icon" aria-hidden="true">🎓</div>
+    </section>
+
+    <!-- Blogs Section -->
+    <section class="container" id="blogs">
+
+        <div class="section-heading">
+            <h2>Explore Our Blogs</h2>
+            <p>Discover ideas, learn something new and share your knowledge.</p>
+        </div>
+
+        <div class="controls">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search blogs by title, author or keyword..."
+                aria-label="Search blogs"
+            >
+
+            <div class="categories">
+                <button type="button" class="category-btn active"
+                    data-category="All">All</button>
+
+                <button type="button" class="category-btn"
+                    data-category="Technology">Technology</button>
+
+                <button type="button" class="category-btn"
+                    data-category="Education">Education</button>
+
+                <button type="button" class="category-btn"
+                    data-category="Student Life">Student Life</button>
+            </div>
+        </div>
+
+        <div class="blog-grid" id="blogGrid"></div>
+    </section>
+
+    <!-- About Section -->
+    <section class="container" id="about">
+        <div class="section-heading">
+            <h2>About This Blog</h2>
+
+            <p>
+                A student-focused platform designed to encourage creativity,
+                knowledge sharing and learning through writing.
+            </p>
+        </div>
+    </section>
+
+    <!-- Add Blog Section -->
+    <section class="add-section" id="add-blog">
+        <div class="form-box">
+
+            <h2>Share Your Story</h2>
+
+            <p class="form-intro">
+                Have an idea? Write a blog and share it with your readers.
+            </p>
+
+            <form id="blogForm">
+
+                <label for="blogTitle">Blog Title</label>
+                <input
+                    type="text"
+                    id="blogTitle"
+                    maxlength="100"
+                    placeholder="Enter your blog title"
+                    required
+                >
+
+                <label for="blogCategory">Category</label>
+                <select id="blogCategory" required>
+                    <option value="">Select a category</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Education">Education</option>
+                    <option value="Student Life">Student Life</option>
+                </select>
+
+                <label for="blogAuthor">Author Name</label>
+                <input
+                    type="text"
+                    id="blogAuthor"
+                    maxlength="60"
+                    placeholder="Enter your name"
+                    required
+                >
+
+                <label for="blogDescription">Blog Content</label>
+                <textarea
+                    id="blogDescription"
+                    maxlength="5000"
+                    placeholder="Write your blog content here..."
+                    required
+                ></textarea>
+
+                <button type="submit" class="submit-btn">
+                    Publish Blog
+                </button>
+
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <h3>University of Layyah Blog</h3>
+        <p>Share ideas. Inspire minds. Keep learning.</p>
+        <p>© <span id="year"></span> Student Blog Project</p>
+    </footer>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+        const defaultBlogs = [
+            {
+                id: 1,
+                title: "The Future of Artificial Intelligence",
+                category: "Technology",
+                author: "Admin",
+                date: "October 18, 2026",
+                description:
+                    "Artificial Intelligence is changing how we work, learn and communicate. AI tools can help students explore new ideas, solve problems and improve productivity. Learning how to use AI responsibly can prepare students for future opportunities."
+            },
+            {
+                id: 2,
+                title: "How to Study Smarter, Not Harder",
+                category: "Education",
+                author: "Student Writer",
+                date: "October 16, 2026",
+                description:
+                    "Good study habits can improve learning. Active recall, regular revision, short study sessions and clear goals help students understand topics more effectively. Make a simple study timetable and follow it consistently."
+            },
+            {
+                id: 3,
+                title: "Why Every Student Should Learn Coding",
+                category: "Technology",
+                author: "Student Writer",
+                date: "October 14, 2026",
+                description:
+                    "Coding develops creativity and problem-solving skills. Students can start with HTML, CSS and JavaScript, then build websites and interactive projects. Regular practice is more valuable than trying to learn everything in one day."
+            },
+            {
+                id: 4,
+                title: "Managing University Life Effectively",
+                category: "Student Life",
+                author: "Student Writer",
+                date: "October 12, 2026",
+                description:
+                    "University life involves classes, assignments, exams and personal responsibilities. Planning your week, breaking large tasks into smaller steps and taking proper breaks can help you maintain a healthy balance."
+            },
+            {
+                id: 5,
+                title: "The Importance of Lifelong Learning",
+                category: "Education",
+                author: "Admin",
+                date: "October 10, 2026",
+                description:
+                    "Learning continues beyond the classroom. Reading, online tutorials, personal projects and practical experience help students develop useful skills. Staying curious can make it easier to adapt to new challenges."
+            },
+            {
+                id: 6,
+                title: "Building Your First Website",
+                category: "Technology",
+                author: "Student Writer",
+                date: "October 8, 2026",
+                description:
+                    "A first website can be built using three core technologies. HTML creates the structure, CSS controls the design and JavaScript adds interaction. Start with a small project and gradually add new features as your confidence grows."
+            }
+        ];
+
+        let blogs = [...defaultBlogs];
+        let selectedCategory = "All";
+
+        const blogGrid = document.getElementById("blogGrid");
+        const searchInput = document.getElementById("searchInput");
+        const blogForm = document.getElementById("blogForm");
+        const toast = document.getElementById("toast");
+
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+        function showMessage(message) {
+            toast.textContent = message;
+            toast.style.display = "block";
+
+            window.clearTimeout(showMessage.timer);
+
+            showMessage.timer = window.setTimeout(() => {
+                toast.style.display = "none";
+            }, 3000);
+        }
+
+        function renderBlogs() {
+            const searchText = searchInput.value.trim().toLowerCase();
+
+            const filteredBlogs = blogs.filter(blog => {
+                const matchesCategory =
+                    selectedCategory === "All" ||
+                    blog.category === selectedCategory;
+
+                const searchableText =
+                    `${blog.title} ${blog.description} ${blog.author} ${blog.category}`
+                    .toLowerCase();
+
+                return matchesCategory &&
+                    searchableText.includes(searchText);
+            });
+
+            blogGrid.replaceChildren();
+
+            if (filteredBlogs.length === 0) {
+                const message = document.createElement("p");
+                message.className = "empty";
+                message.textContent =
+                    "No blogs found. Try a different keyword or category.";
+
+                blogGrid.appendChild(message);
+                return;
+            }
+
+            filteredBlogs.forEach(blog => {
+                const card = document.createElement("article");
+                card.className = "blog-card";
+
+                const content = document.createElement("div");
+                content.className = "blog-content";
+
+                const tag = document.createElement("span");
+                tag.className = "tag";
+                tag.textContent = blog.category;
+
+                const title = document.createElement("h3");
+                title.textContent = blog.title;
+
+                const meta = document.createElement("div");
+                meta.className = "blog-meta";
+                meta.textContent = `By ${blog.author} · ${blog.date}`;
+
+                const description = document.createElement("p");
+                description.textContent =
+                    blog.description.length > 135
+                        ? blog.description.slice(0, 135) + "..."
+                        : blog.description;
+
+                const readButton = document.createElement("button");
+                readButton.type = "button";
+                readButton.className = "read-btn";
+                readButton.textContent = "Read More →";
+
+                readButton.addEventListener("click", () => {
+                    const articleWindow = window.open("", "_blank");
+
+                    if (!articleWindow) {
+                        showMessage("Please allow pop-ups to read the full blog.");
+                        return;
+                    }
+
+                    const article = articleWindow.document;
+
+                    article.title = blog.title;
+
+                    const style = article.createElement("style");
+                    style.textContent = `
+                        body {
+                            font-family: Arial, sans-serif;
+                            max-width: 760px;
+                            margin: 50px auto;
+                            padding: 20px;
+                            line-height: 1.8;
+                            color: #24352c;
+                        }
+                        h1 { color: #17613e; }
+                        .category { color: #187345; font-weight: bold; }
+                        .back {
+                            display: inline-block;
+                            margin-top: 25px;
+                            color: #17613e;
+                        }
+                        @media (max-width: 600px) {
+                            body { margin: 15px auto; }
+                        }
+                    `;
+
+                    const heading = article.createElement("h1");
+                    heading.textContent = blog.title;
+
+                    const category = article.createElement("p");
+                    category.className = "category";
+                    category.textContent = blog.category;
+
+                    const author = article.createElement("p");
+                    author.textContent =
+                        `By ${blog.author} · ${blog.date}`;
+
+                    const paragraph = article.createElement("p");
+                    paragraph.style.whiteSpace = "pre-wrap";
+                    paragraph.textContent = blog.description;
+
+                    article.head.appendChild(style);
+                    article.body.append(heading, category, author, paragraph);
+                });
+
+                content.append(tag, title, meta, description, readButton);
+                card.appendChild(content);
+                blogGrid.appendChild(card);
+            });
+        }
+
+        searchInput.addEventListener("input", renderBlogs);
+
+        document.querySelectorAll(".category-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                selectedCategory = button.dataset.category;
+
+                document.querySelectorAll(".category-btn").forEach(btn => {
+                    btn.classList.toggle("active", btn === button);
+                });
+
+                renderBlogs();
+            });
+        });
+
+        blogForm.addEventListener("submit", event => {
+            event.preventDefault();
+
+            const title =
+                document.getElementById("blogTitle").value.trim();
+
+            const category =
+                document.getElementById("blogCategory").value;
+
+            const author =
+                document.getElementById("blogAuthor").value.trim();
+
+            const description =
+                document.getElementById("blogDescription").value.trim();
+
+            if (!title || !category || !author || !description) {
+                showMessage("Please complete all fields.");
+                return;
+            }
+
+            blogs.unshift({
+                id: Date.now(),
+                title,
+                category,
+                author,
+                date: new Date().toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                }),
+                description
+            });
+
+            selectedCategory = "All";
+            searchInput.value = "";
+
+            document.querySelectorAll(".category-btn").forEach(button => {
+                button.classList.toggle(
+                    "active",
+                    button.dataset.category === "All"
+                );
+            });
+
+            renderBlogs();
+            blogForm.reset();
+
+            document.getElementById("blogs").scrollIntoView({
+                behavior: "smooth"
+            });
+
+            showMessage("Your blog has been published!");
+        });
+
+        renderBlogs();
+    </script>
+
+</body>
+</html>
